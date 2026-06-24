@@ -5,9 +5,8 @@ Flask-Bcrypt==1.0.1
 Flask-Migrate==4.0.7
 marshmallow==3.22.0
 python-dotenv==1.0.1
-
-# Optional: only needed if you use PostgreSQL instead of the default SQLite.
-# psycopg2-binary==2.9.9
+gunicorn==22.0.0
+psycopg2-binary==2.9.9
 
 # Dev / testing only:
 pytest==8.3.2

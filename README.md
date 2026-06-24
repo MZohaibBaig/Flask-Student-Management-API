@@ -1,3 +1,5 @@
+[![CI](https://github.com/MZohaibBaig/Flask-Student-Management-API/actions/workflows/ci.yml/badge.svg)](https://github.com/MZohaibBaig/Flask-Student-Management-API/actions/workflows/ci.yml)
+
 # Student Management API
 
 A RESTful API for managing student records, built with **Flask**. It supports full
@@ -166,6 +168,32 @@ pytest -q
 The suite covers registration, login, the full CRUD cycle, authorization
 enforcement (writes rejected without a token), duplicate-email conflicts, and
 input validation.
+
+---
+
+## Docker
+
+### Quick run (SQLite, single container)
+
+```bash
+docker build -t student-api .
+docker run -p 8000:8000 \
+  -e JWT_SECRET_KEY=$(python -c "import secrets; print(secrets.token_hex(32))") \
+  student-api
+```
+
+### Full stack with PostgreSQL (docker compose)
+
+```bash
+docker compose up --build
+```
+
+This starts a `postgres:16` database and the API on `http://localhost:8000`. The web
+container runs `flask --app app db upgrade` before launching gunicorn, so the schema is
+always up-to-date on startup.
+
+Set `JWT_SECRET_KEY` in `docker-compose.yml` (or via a `.env` file) before deploying to
+any shared environment.
 
 ---
 
