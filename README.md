@@ -140,6 +140,23 @@ curl localhost:5000/api/students
 
 ---
 
+## Database Migrations
+
+Schema changes are managed with **Alembic** via Flask-Migrate.
+
+```bash
+# Apply all pending migrations (run this after cloning or pulling new migrations)
+flask --app app db upgrade
+
+# Generate a new migration after editing models.py
+flask --app app db migrate -m "describe your change"
+flask --app app db upgrade
+```
+
+The `migrations/` folder is committed to the repository. Never edit migration files by hand after they have been applied to a shared database.
+
+---
+
 ## Running Tests
 
 ```bash

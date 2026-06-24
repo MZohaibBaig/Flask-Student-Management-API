@@ -9,6 +9,7 @@ Seed sample data:
 """
 import click
 from flask import Flask, jsonify
+from flask_migrate import Migrate
 
 from auth import auth_bp
 from config import Config
@@ -24,16 +25,11 @@ def create_app(config_object=Config):
     db.init_app(app)
     bcrypt.init_app(app)
     jwt.init_app(app)
+    Migrate(app, db, render_as_batch=True)
 
     # Register blueprints
     app.register_blueprint(auth_bp)
     app.register_blueprint(students_bp)
-
-    # Import models so SQLAlchemy is aware of them, then create tables.
-    with app.app_context():
-        from models import Student, User  # noqa: F401
-
-        db.create_all()
 
     _register_error_handlers(app)
     _register_cli(app)
