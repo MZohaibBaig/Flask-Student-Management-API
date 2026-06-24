@@ -6,15 +6,20 @@ to PostgreSQL/MySQL in production.
 """
 import os
 from datetime import timedelta
+from pathlib import Path
+
+# Absolute path to the project root (directory containing this file).
+_PROJECT_ROOT = Path(__file__).parent.resolve()
+_DEFAULT_DB = "sqlite:///" + (_PROJECT_ROOT / "students.db").as_posix()
 
 
 class Config:
     # --- Database -----------------------------------------------------------
-    # Default: local SQLite file (zero setup, just run the app).
+    # Default: local SQLite file anchored to the project root (zero setup).
     # Production: set DATABASE_URL, e.g.
     #   postgresql://user:pass@host:5432/students
     #   mysql+pymysql://user:pass@host:3306/students
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL", "sqlite:///students.db")
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL", _DEFAULT_DB)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # --- Auth / JWT ---------------------------------------------------------
